@@ -1,11 +1,13 @@
 package cf.nathanpb.Dogo.Commands;
 
-import cf.nathanpb.Dogo.*;
 import cf.nathanpb.Dogo.CommandHandler.Command;
+import cf.nathanpb.Dogo.CommandHandler.annotations.Arg;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Cmd;
-import cf.nathanpb.Dogo.CommandHandler.annotations.Default;
+import cf.nathanpb.Dogo.CommandHandler.enums.Permission;
 import cf.nathanpb.Dogo.Config;
+import cf.nathanpb.Dogo.Core;
 import cf.nathanpb.Dogo.Utils.DiscordUtils;
+import cf.nathanpb.Dogo.Utils.SystemUtils;
 import net.dv8tion.jda.core.EmbedBuilder;
 
 import java.awt.*;
@@ -18,13 +20,18 @@ import java.lang.reflect.Modifier;
  * Created by nathanpb on 8/2/17.
  */
 @Cmd(
-        cmd = "stats",
-        description = "Shows info about Dogo's system",
+        cmd = "bot",
+        description = "Shows info about Dogo",
         usage = "stats",
-        freeArgs = true
+        freeArgs = false,
+        argslengh = 1
 )
-public class Stats {
-    @Default
+public class Bot {
+    @Arg(
+            arg = "stats",
+            usage = "bot stats",
+            description = "Shows info about Dogo's system"
+    )
     public static void Default(Command cmd){
         EmbedBuilder embed = new EmbedBuilder();
 
@@ -39,6 +46,28 @@ public class Stats {
         embed.setFooter("Developed by NathanPB", DiscordUtils.getAvatarURL(Core.jda.getUserById(Config.OWNER_ID.get())));
 
         cmd.getChannel().sendMessage(embed.build()).queue();
+    }
+
+    @Arg(
+            arg = "update",
+            description = "Rebuild Dogo based on GitHub",
+            usage = "bot update",
+            allow = Permission.OWNER
+    )
+    public static void Update(Command cmd){
+        SystemUtils.shellCommand("./autobuild");
+        cmd.reply("Updated!");
+    }
+
+    @Arg(
+            arg = "restart",
+            description = "Restart Dogo",
+            usage = "bot restart",
+            allow = Permission.OWNER
+    )
+    public static void Restart(Command cmd){
+        cmd.reply("Restarting...");
+        System.exit(0);
     }
     public static double getUsage() {
         Object value = "";

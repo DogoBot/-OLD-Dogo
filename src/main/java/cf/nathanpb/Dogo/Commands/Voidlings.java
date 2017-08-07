@@ -1,11 +1,11 @@
 package cf.nathanpb.Dogo.Commands;
 
-import cf.nathanpb.Dogo.*;
 import cf.nathanpb.Dogo.CommandHandler.Command;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Arg;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Cmd;
 import cf.nathanpb.Dogo.CommandHandler.enums.Permission;
 import cf.nathanpb.Dogo.Config;
+import cf.nathanpb.Dogo.Core;
 import net.dv8tion.jda.core.entities.Member;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class Voidlings {
         String s = "";
         ArrayList<String> ids = new ArrayList<>();
         for(Member m : Core.jda.getGuildById(Config.GUILD_ID.get()).getMembers()){
-            if(Permissions.hasPermission(m.getUser(), Permission.VOID_APPRENDICE)){
+            if(Permission.VOID_APPRENDICE.has(m.getUser())){
                 ids.add(m.getUser().getId());
             }
         }
@@ -75,7 +75,7 @@ public class Voidlings {
     public static void size(Command cmd){
         int i = 0;
         for(Member m : Core.jda.getGuildById(Config.GUILD_ID.get()).getMembers()){
-            if(Permissions.getPerms(m.getUser()).contains(Permission.VOID_APPRENDICE)){
+            if(Permission.getPerms(m.getUser()).contains(Permission.VOID_APPRENDICE)){
                 i++;
             }
         }

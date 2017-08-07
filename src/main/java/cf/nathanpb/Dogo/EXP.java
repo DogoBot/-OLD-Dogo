@@ -7,7 +7,6 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

@@ -1,8 +1,6 @@
 package cf.nathanpb.Dogo;
 
 import cf.nathanpb.Dogo.Events.*;
-import cf.nathanpb.Dogo.FormManager.Form;
-import cf.nathanpb.Dogo.Utils.ArrayUtils;
 import cf.nathanpb.Dogo.Utils.DiscordUtils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageChannel;

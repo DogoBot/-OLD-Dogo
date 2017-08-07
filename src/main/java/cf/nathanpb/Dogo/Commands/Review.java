@@ -5,7 +5,6 @@ import cf.nathanpb.Dogo.CommandHandler.annotations.Cmd;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Default;
 import cf.nathanpb.Dogo.CommandHandler.enums.Permission;
 import cf.nathanpb.Dogo.Core;
-import cf.nathanpb.Dogo.Permissions;
 import cf.nathanpb.Dogo.Utils.DiscordUtils;
 import me.nathanpb.ProjectMetadata.ProjectMetadataObject;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -29,7 +28,7 @@ public class Review {
     public static void Default(Command cmd){
         List<User> all = DiscordUtils.getMentionedUsers(cmd.getMessage());
         for(User u : all){
-            if (Permissions.hasPermission(u, Permission.VOID_APPRENDICE)) {
+            if (Permission.VOID_APPRENDICE.has(u)) {
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setColor(Color.GREEN);
                 embed.setAuthor(u.getName(), DiscordUtils.getAvatarURL(u), DiscordUtils.getAvatarURL(u));

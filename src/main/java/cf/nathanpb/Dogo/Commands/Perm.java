@@ -6,7 +6,6 @@ import cf.nathanpb.Dogo.CommandHandler.annotations.Cmd;
 import cf.nathanpb.Dogo.CommandHandler.enums.Permission;
 import cf.nathanpb.Dogo.Config;
 import cf.nathanpb.Dogo.Core;
-import cf.nathanpb.Dogo.Permissions;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.Role;
@@ -47,7 +46,7 @@ public class Perm {
         for (User u : listAllUsers(c.getMessage())) {
             for (Permission p : Permission.values()) {
                 if (c.getArg(1).equalsIgnoreCase(p.name())) {
-                    if(Permissions.addPerm(u, p)) {
+                    if(p.add(u)) {
                         c.getChannel().sendMessage("Permission **" + p.name() + "** given to " + u.getAsMention()).queue();
                     }else{
                         c.getChannel().sendMessage("Wasn't possible give this perm to "+u.getAsMention()+". Maybe she/he already have it!").queue();
@@ -65,7 +64,7 @@ public class Perm {
     )
     public static void list(Command c){
         for(User u : listAllUsers(c.getMessage())){
-            c.getChannel().sendMessage("**"+u.getName()+"'s** perms: "+Permissions.getPerms(u)).queue();
+            c.getChannel().sendMessage("**"+u.getName()+"'s** perms: "+Permission.getPerms(u)).queue();
         }
     }
 
@@ -79,7 +78,7 @@ public class Perm {
         for (User u : listAllUsers(c.getMessage())) {
             for (Permission p : Permission.values()) {
                 if (c.getArg(1).equalsIgnoreCase(p.name())) {
-                    if(Permissions.removePerm(u, p)) {
+                    if(p.remove(u)) {
                         c.getChannel().sendMessage("Permission **" + p.name() + "** got removed of " + u.getAsMention()).queue();
                     }else{
                         c.getChannel().sendMessage("Wasn't possible remove this perm from "+u.getAsMention()+". Maybe he/she doesn't have it!").queue();
@@ -100,7 +99,7 @@ public class Perm {
         for (Member m : Core.jda.getGuildById(Config.GUILD_ID.get(String.class)).getMembers()) {
             for (Permission p : Permission.values()) {
                 if (p.name().equalsIgnoreCase(c.getArg(1))) {
-                    if (Permissions.getPerms(m.getUser()).contains(p)) {
+                    if (Permission.getPerms(m.getUser()).contains(p)) {
                         s+=m.getUser().getAsMention()+", ";
                     }
                 }
@@ -119,8 +118,8 @@ public class Perm {
         for (Member m : Core.jda.getGuildById(Config.GUILD_ID.get(String.class)).getMembers()) {
             for (Permission p : Permission.values()) {
                 if (p.name().equalsIgnoreCase(c.getArg(1))) {
-                    if (Permissions.getPerms(m.getUser()).contains(p)) {
-                        Permissions.removePerm(m.getUser(), p);
+                    if (Permission.getPerms(m.getUser()).contains(p)) {
+                        p.remove(m.getUser());
                        c.getChannel().sendMessage("Permission **" + p + "** got removed from " + m.getAsMention()).queue();
                     }
                 }

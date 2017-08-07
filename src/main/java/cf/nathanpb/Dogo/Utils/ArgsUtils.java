@@ -1,6 +1,5 @@
 package cf.nathanpb.Dogo.Utils;
 
-import java.lang.*;
 import java.util.ArrayList;
 
 /**

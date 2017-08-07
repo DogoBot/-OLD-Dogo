@@ -7,9 +7,6 @@ import cf.nathanpb.Dogo.Exceptions.EvalException;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.*;
-import java.io.File;
-import java.lang.*;
-import java.lang.System;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 

@@ -1,13 +1,14 @@
 package cf.nathanpb.Dogo.Commands;
 
-import cf.nathanpb.Dogo.*;
 import cf.nathanpb.Dogo.CommandHandler.Command;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Cmd;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Default;
 import cf.nathanpb.Dogo.CommandHandler.enums.Permission;
 import cf.nathanpb.Dogo.Config;
+import cf.nathanpb.Dogo.Core;
 import cf.nathanpb.Dogo.Events.TriedToEnlistEvent;
 import cf.nathanpb.Dogo.FormManager.Form;
+import cf.nathanpb.Dogo.Logger;
 import cf.nathanpb.Dogo.Utils.DiscordUtils;
 import me.nathanpb.ProjectMetadata.ProjectMetadataObject;
 import net.dv8tion.jda.core.entities.User;
@@ -42,7 +43,7 @@ public class Verify {
     }
     public static void enlist(User u){
         Logger.log(new TriedToEnlistEvent(u));
-        if(!Permissions.hasPermission(u, Permission.VOID_APPRENDICE)) {
+        if(!Permission.VOID_APPRENDICE.has(u)) {
             ProjectMetadataObject profile = new ProjectMetadataObject(u.getId());
             if (!profile.hasKey("alistado")) {
                 profile.put("alistado", false);

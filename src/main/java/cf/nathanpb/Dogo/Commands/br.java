@@ -1,10 +1,10 @@
 package cf.nathanpb.Dogo.Commands;
 
-import cf.nathanpb.Dogo.*;
 import cf.nathanpb.Dogo.CommandHandler.Command;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Cmd;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Default;
 import cf.nathanpb.Dogo.Config;
+import cf.nathanpb.Dogo.Core;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Role;

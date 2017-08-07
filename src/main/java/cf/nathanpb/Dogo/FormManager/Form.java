@@ -1,25 +1,24 @@
 package cf.nathanpb.Dogo.FormManager;
 
-        import cf.nathanpb.Dogo.CommandHandler.enums.Permission;
-        import cf.nathanpb.Dogo.Config;
-        import cf.nathanpb.Dogo.Core;
-        import cf.nathanpb.Dogo.Events.FormSentToRecruiterEvent;
-        import cf.nathanpb.Dogo.Events.SoldierRecrutedEvent;
-        import cf.nathanpb.Dogo.Logger;
-        import cf.nathanpb.Dogo.Permissions;
-        import cf.nathanpb.Dogo.Utils.DiscordUtils;
-        import me.nathanpb.ProjectMetadata.ProjectMetadataObject;
-        import net.dv8tion.jda.core.EmbedBuilder;
-        import net.dv8tion.jda.core.entities.*;
-        import net.dv8tion.jda.core.events.Event;
-        import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-        import net.dv8tion.jda.core.hooks.EventListener;
+import cf.nathanpb.Dogo.CommandHandler.enums.Permission;
+import cf.nathanpb.Dogo.Config;
+import cf.nathanpb.Dogo.Core;
+import cf.nathanpb.Dogo.Events.FormSentToRecruiterEvent;
+import cf.nathanpb.Dogo.Events.SoldierRecrutedEvent;
+import cf.nathanpb.Dogo.Logger;
+import cf.nathanpb.Dogo.Utils.DiscordUtils;
+import me.nathanpb.ProjectMetadata.ProjectMetadataObject;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.*;
+import net.dv8tion.jda.core.events.Event;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.hooks.EventListener;
 
-        import java.awt.*;
-        import java.text.SimpleDateFormat;
-        import java.util.ArrayList;
-        import java.util.Calendar;
-        import java.util.List;
+import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by nathanpb on 7/1/17.
@@ -114,7 +113,7 @@ public class Form implements EventListener {
         }
     }
     public static void registerSoldier(User u, MessageEmbed msg, User recruiter) {
-        Permissions.addPerm(u, Permission.VOID_APPRENDICE);
+        Permission.VOID_APPRENDICE.add(u);
         DiscordUtils.sendPrivateMessage(DiscordUtils.getUserByURL(msg.getAuthor().getUrl()), "You got accepted as an Void Apprentice!");
         ProjectMetadataObject profile = new ProjectMetadataObject(u.getId());
         String s = msg.getDescription();

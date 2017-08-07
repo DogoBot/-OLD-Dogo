@@ -10,7 +10,6 @@ import cf.nathanpb.Dogo.Config;
 import cf.nathanpb.Dogo.Core;
 import cf.nathanpb.Dogo.Events.CommandExecutedEvent;
 import cf.nathanpb.Dogo.JsonMessage;
-import cf.nathanpb.Dogo.Permissions;
 import cf.nathanpb.Dogo.Utils.DiscordUtils;
 import cf.nathanpb.Dogo.Utils.HastebinUtils;
 import net.dv8tion.jda.core.entities.*;
@@ -59,7 +58,7 @@ public class Command {
 
         if (this.annotation.freeArgs()) found = true;
         if (getParameters().contains(Parameters.OWNER)) {
-            ownerPerms = Permissions.hasPermission(sender, Permission.OWNER);
+            ownerPerms = Permission.OWNER.has(sender);
         }
         trigger();
     }
@@ -215,7 +214,7 @@ public class Command {
     private void exec() throws Exception {
         Method dm = null;
         Method arg = null;
-        if (Permissions.canExecute(this, getAnnotation())) {
+        if (Permission.canExecute(this, getAnnotation())) {
             if (checkargs()) {
                 allow = true;
                 Method d = getDefault();
@@ -233,7 +232,7 @@ public class Command {
         }
         Method m = getMethod();
         if (m != null) {
-            if (Permissions.canExecute(this, getAnnotation(m))) {
+            if (Permission.canExecute(this, getAnnotation(m))) {
                 if (checkargs(m)) {
                     allow = true;
                     arg = m;

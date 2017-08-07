@@ -1,11 +1,11 @@
 package cf.nathanpb.Dogo.Commands;
 
-import cf.nathanpb.Dogo.*;
 import cf.nathanpb.Dogo.CommandHandler.Command;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Arg;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Cmd;
 import cf.nathanpb.Dogo.CommandHandler.enums.Parameters;
 import cf.nathanpb.Dogo.CommandHandler.enums.Permission;
+import cf.nathanpb.Dogo.Core;
 import cf.nathanpb.Dogo.Events.QQExecutedEvent;
 import cf.nathanpb.Dogo.Utils.DiscordUtils;
 import cf.nathanpb.Dogo.Utils.HastebinUtils;
@@ -19,7 +19,10 @@ import org.json.JSONObject;
 
 import java.awt.*;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Created by nathanpb on 7/28/17.
@@ -115,7 +118,7 @@ public class QuickCommand extends ListenerAdapter{
     public static void remove(Command cmd){
         if(getAll().containsKey(cmd.getArg(1))){
             if(!cmd.isOwner()) {
-                if (!Permissions.hasPermission(cmd.getSender(), Permission.ADMIN)) {
+                if (!Permission.ADMIN.has(cmd.getSender())) {
                     if (!getAll().get(cmd.getArg(1)).getString("owner").equals(cmd.getSender().getId())) {
                         cmd.getChannel().sendMessage("Este comando não te pertence!").queue();
                         cmd.allow = false;
@@ -140,7 +143,7 @@ public class QuickCommand extends ListenerAdapter{
     public static void raw(Command cmd){
         if(getAll().containsKey(cmd.getArg(1))){
             if(!cmd.isOwner()) {
-                if (!Permissions.hasPermission(cmd.getSender(), Permission.ADMIN)) {
+                if (!Permission.ADMIN.has(cmd.getSender())) {
                     if (!getAll().get(cmd.getArg(1)).getString("owner").equals(cmd.getSender().getId())) {
                         cmd.getChannel().sendMessage("This QuickCommand doesn't belongs you!").queue();
                         cmd.allow = false;

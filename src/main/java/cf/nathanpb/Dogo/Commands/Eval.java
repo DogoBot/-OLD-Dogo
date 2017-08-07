@@ -1,12 +1,11 @@
 package cf.nathanpb.Dogo.Commands;
 
-import cf.nathanpb.Dogo.*;
 import cf.nathanpb.Dogo.CommandHandler.Command;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Cmd;
-
 import cf.nathanpb.Dogo.CommandHandler.annotations.Default;
 import cf.nathanpb.Dogo.CommandHandler.enums.Parameters;
 import cf.nathanpb.Dogo.CommandHandler.enums.Permission;
+import cf.nathanpb.Dogo.*;
 import cf.nathanpb.Dogo.Exceptions.EvalException;
 import cf.nathanpb.Dogo.Utils.ArgsUtils;
 import cf.nathanpb.Dogo.Utils.HastebinUtils;
@@ -63,7 +62,6 @@ public class Eval {
         addImport(EXP.class);
         addImport(JsonMessage.class);
         addImport(Logger.class);
-        addImport(Permissions.class);
         addImport(RecruiterChannelCleaner.class);
         addImport(Core.class.getPackage());
 
