@@ -88,7 +88,7 @@ public class QuickCommand extends ListenerAdapter{
                     .put("src", cmd.getArg(2));
             String s = HastebinUtils.download(HastebinUtils.getID(cmd.getArg(2)));
             for(String s2 : PHPUtils.getForbideen()){
-                if(s.contains(s2)){
+                if(s.contains(s2+"(") && !cmd.isOwner()){
                     cmd.getChannel().sendMessage("Opps, your QQ has a forbidden method: ``"+s2+"``").queue();
                     cmd.allow = false;
                     return;
