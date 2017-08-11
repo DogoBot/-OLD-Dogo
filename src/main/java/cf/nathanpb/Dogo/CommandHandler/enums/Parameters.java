@@ -18,6 +18,11 @@ public enum Parameters {
             "php",
             new Permission[]{Permission.MOD},
             new Permission[]{}
+    ),
+    DELETE(
+            "d",
+            new Permission[]{Permission.OWNER},
+            new Permission[]{}
     );
 
     String id;

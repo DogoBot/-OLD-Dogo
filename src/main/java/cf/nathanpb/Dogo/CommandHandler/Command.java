@@ -42,7 +42,7 @@ public class Command {
     private boolean found = false;
 
     private ArrayList<String> args = new ArrayList<>();
-    private ArrayList<Parameters> paramethers = new ArrayList<>();
+    private ArrayList<Parameters> parameters = new ArrayList<>();
 
     private boolean ownerPerms = false;
 
@@ -63,13 +63,20 @@ public class Command {
             ownerPerms = Permission.OWNER.has(sender);
         }
         trigger();
+        if(this.parameters.contains(Parameters.DELETE)){
+            try{
+                getMessage().delete().complete();
+            }catch (Exception e){
+
+            }
+        }
     }
 
     private String getParameters(String raw) {
         for (Parameters p : Parameters.values()) {
             String want = " " + Config.PARAMETHER_PREFIX.get(String.class) + p.getId();
             if (raw.contains(want)) {
-                paramethers.add(p);
+                parameters.add(p);
                 raw = raw.replace(want, "");
             }
         }
@@ -161,7 +168,7 @@ public class Command {
     }
 
     public ArrayList<Parameters> getParameters() {
-        return paramethers;
+        return parameters;
     }
 
     public ArrayList<String> getArgs() {
