@@ -63,11 +63,13 @@ public class Command {
             ownerPerms = Permission.OWNER.has(sender);
         }
         trigger();
-        if(this.parameters.contains(Parameters.DELETE)){
-            try{
-                getMessage().delete().complete();
-            }catch (Exception e){
+        if(allow) {
+            if (this.parameters.contains(Parameters.DELETE)) {
+                try {
+                    getMessage().delete().complete();
+                } catch (Exception e) {
 
+                }
             }
         }
     }
@@ -102,19 +104,6 @@ public class Command {
                     new Command(msg, c, a);
                     return;
                 }
-            }
-            if (QuickCommand.getAll().containsKey(cmdname)) {
-                Executors.newSingleThreadExecutor().submit(
-                        () -> {
-                            String s = QuickCommand.exec(QuickCommand.getAll().get(cmdname), msg.getChannel(), msg.getAuthor(), msg.getContent());
-                            try {
-                                new JsonMessage(new JSONObject(s)).send(msg.getChannel());
-                            } catch (Exception e) {
-                                msg.getChannel().sendMessage(s).queue();
-                            }
-                        }
-                );
-
             }
         }
     }

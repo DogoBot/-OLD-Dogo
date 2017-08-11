@@ -168,7 +168,6 @@ public class QuickCommand extends ListenerAdapter{
             String code = HastebinUtils.download(HastebinUtils.getID(o.getString("src")));
             Object[] args = new Object[]{o, channel.getId(), u.getId(), raw, PHPUtils.header};
              s = PHPUtils.eval(code, args);
-             new QQExecutedEvent(o.getString("name"), o, channel, u);
         }catch (Exception e){
             s = "```"+e.getMessage()+"```";
         }

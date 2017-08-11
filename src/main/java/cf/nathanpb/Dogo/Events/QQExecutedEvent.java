@@ -1,5 +1,6 @@
 package cf.nathanpb.Dogo.Events;
 
+import cf.nathanpb.Dogo.CommandHandler.QuickCommand;
 import cf.nathanpb.Dogo.Logger;
 import net.dv8tion.jda.core.entities.MessageChannel;
 import net.dv8tion.jda.core.entities.User;
@@ -13,11 +14,11 @@ public class QQExecutedEvent extends BotEvent{
     JSONObject object;
     MessageChannel channel;
     User u;
-    public QQExecutedEvent(String name, JSONObject object, MessageChannel channel, User u){
-        this.name = name;
-        this.object = object;
-        this.channel = channel;
-        this.u = u;
+    public QQExecutedEvent(QuickCommand qq){
+        this.name = qq.getName();
+        this.object = qq.getObject();
+        this.channel = qq.getChannel();
+        this.u = qq.getSender();
         Logger.log(this);
     }
 
