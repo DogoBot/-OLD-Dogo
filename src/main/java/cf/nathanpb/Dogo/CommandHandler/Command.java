@@ -215,7 +215,6 @@ public class Command {
 
     private void exec() throws Exception {
         Method dm = null;
-        Method arg = null;
         if (Permission.canExecute(this, getAnnotation())) {
             if (checkargs()) {
                 allow = true;
@@ -228,7 +227,7 @@ public class Command {
                 return;
             }
         } else {
-            channel.sendMessage("You dont have permissions to use this command!").queue();
+            channel.sendMessage("You don't have permissions to use this command!").queue();
             allow = false;
             return;
         }
@@ -237,7 +236,6 @@ public class Command {
             if (Permission.canExecute(this, getAnnotation(m))) {
                 if (checkargs(m)) {
                     allow = true;
-                    arg = m;
                 } else {
                     channel.sendMessage("Incorrect args size! Use " + Config.COMMAND_PREFIX.get(String.class) + "help to see help").queue();
                     return;
