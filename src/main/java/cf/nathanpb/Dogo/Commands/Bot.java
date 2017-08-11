@@ -56,14 +56,8 @@ public class Bot {
             allow = Permission.OWNER
     )
     public static void Update(Command cmd){
-        String s = SystemUtils.shellCommand("./autobuild.sh");
-        if(s.length() > 1900){
-            s = HastebinUtils.getUrl(HastebinUtils.upload(s), false);
-        }else{
-            s = "```"+s+"```";
-        }
-        cmd.reply(s);
-        cmd.reply("Updated!");
+        Rebuild(cmd);
+        Restart(cmd);
     }
 
     @Arg(
@@ -91,5 +85,22 @@ public class Bot {
             }
         }
         return Math.round((double)value);
+    }
+
+    @Arg(
+            arg = "rebuild",
+            description = "Rebuild Dogo based on GitHub",
+            usage = "bot rebuild",
+            allow = Permission.OWNER
+    )
+    public static void Rebuild(Command cmd){
+        String s = SystemUtils.shellCommand("./autobuild.sh");
+        if(s.length() > 1900){
+            s = HastebinUtils.getUrl(HastebinUtils.upload(s), false);
+        }else{
+            s = "```"+s+"```";
+        }
+        cmd.reply(s);
+        cmd.reply("Updated!");
     }
 }
