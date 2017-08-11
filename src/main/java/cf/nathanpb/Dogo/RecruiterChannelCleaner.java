@@ -25,7 +25,7 @@ public class RecruiterChannelCleaner implements EventListener {
                                 int deleted = 0;
                                 channel.sendMessage("Starting auto-cleaning process...").queue();
                                 for (Message m : msgs) {
-                                    if (m.getEmbeds().size() == 0 || m.getEmbeds().get(0).getTitle().contains("profile")) {
+                                    if (m.getEmbeds().size() == 0 || !m.getEmbeds().get(0).getTitle().contains("profile")) {
                                         m.delete().complete();
                                         deleted++;
                                     }
