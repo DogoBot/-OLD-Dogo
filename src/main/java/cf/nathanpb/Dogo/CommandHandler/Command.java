@@ -69,9 +69,12 @@ public class Command {
                     getMessage().delete().complete();
                 } catch (Exception e) {
 
+                }finally {
+                    return;
                 }
             }
         }
+        cf.nathanpb.Dogo.CommandHandler.QuickCommand.checkQuickCommand(msg);
     }
 
     private String getParameters(String raw) {
