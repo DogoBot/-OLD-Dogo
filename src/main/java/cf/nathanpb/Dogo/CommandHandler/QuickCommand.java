@@ -48,7 +48,7 @@ public class QuickCommand {
             }
             this.object = cf.nathanpb.Dogo.Commands.QuickCommand.getAll().get(qqName);
             Executors.newSingleThreadExecutor().submit(() -> {
-                String s = cf.nathanpb.Dogo.Commands.QuickCommand.exec(this.object, msg.getChannel(), msg.getAuthor(), msg.getContent());
+                String s = cf.nathanpb.Dogo.Commands.QuickCommand.exec(this.object, msg.getChannel(), msg.getAuthor(), raw);
                 try {
                     new JsonMessage(new JSONObject(s)).send(msg.getChannel());
                 } catch (Exception e) {
