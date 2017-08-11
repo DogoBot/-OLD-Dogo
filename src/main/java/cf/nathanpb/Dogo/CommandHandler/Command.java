@@ -74,7 +74,6 @@ public class Command {
                 }
             }
         }
-        cf.nathanpb.Dogo.CommandHandler.QuickCommand.checkQuickCommand(msg);
     }
 
     private String getParameters(String raw) {
@@ -109,6 +108,7 @@ public class Command {
                 }
             }
         }
+        cf.nathanpb.Dogo.CommandHandler.QuickCommand.checkQuickCommand(msg);
     }
 
     public void reply(JSONObject o) {
