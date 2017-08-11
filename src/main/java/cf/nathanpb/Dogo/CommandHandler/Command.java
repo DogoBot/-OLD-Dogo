@@ -119,7 +119,7 @@ public class Command {
         try {
             new JsonMessage(s).send(channel);
         } catch (Exception e) {
-            channel.sendMessage(s).queue();
+            channel.sendMessage(s).complete();
         }
     }
 
