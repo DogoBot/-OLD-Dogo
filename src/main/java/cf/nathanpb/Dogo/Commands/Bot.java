@@ -7,6 +7,7 @@ import cf.nathanpb.Dogo.CommandHandler.enums.Permission;
 import cf.nathanpb.Dogo.Config;
 import cf.nathanpb.Dogo.Core;
 import cf.nathanpb.Dogo.Utils.DiscordUtils;
+import cf.nathanpb.Dogo.Utils.HastebinUtils;
 import cf.nathanpb.Dogo.Utils.SystemUtils;
 import net.dv8tion.jda.core.EmbedBuilder;
 
@@ -55,7 +56,13 @@ public class Bot {
             allow = Permission.OWNER
     )
     public static void Update(Command cmd){
-        cmd.reply(SystemUtils.shellCommand("./autobuild.sh"));
+        String s = SystemUtils.shellCommand("./autobuild.sh");
+        if(s.length() > 1900){
+            s = HastebinUtils.getUrl(HastebinUtils.upload(s), false);
+        }else{
+            s = "```"+s+"```";
+        }
+        cmd.reply(s);
         cmd.reply("Updated!");
     }
 
