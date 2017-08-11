@@ -55,7 +55,7 @@ public class Bot {
             allow = Permission.OWNER
     )
     public static void Update(Command cmd){
-        cmd.reply(SystemUtils.shellCommand("./autobuild"));
+        cmd.reply(SystemUtils.shellCommand("./autobuild.sh"));
         cmd.reply("Updated!");
     }
 
