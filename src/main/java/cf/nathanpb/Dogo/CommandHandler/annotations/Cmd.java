@@ -22,6 +22,7 @@ public @interface Cmd {
     String usage();
 
     int argslengh() default 0;
+    int cooldown() default 10;
 
     boolean freeArgs() default false;
 }

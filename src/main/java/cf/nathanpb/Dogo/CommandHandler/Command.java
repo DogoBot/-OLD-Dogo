@@ -34,9 +34,10 @@ public class Command {
     private Class cmdClass;
     private Cmd annotation;
     private Message msg;
-    private MessageChannel channel;
+    private TextChannel channel;
     private Guild guild;
     public boolean allow = true;
+    public int autodeleteCooldown;
 
     private boolean found = false;
 
@@ -51,8 +52,9 @@ public class Command {
         this.cmdClass = cmdClass;
         this.annotation = annotation;
         this.cmdName = annotation.cmd();
+        this.autodeleteCooldown = annotation.cooldown();
         this.msg = msg;
-        this.channel = msg.getChannel();
+        this.channel = (TextChannel) msg.getChannel();
         this.guild = msg.getGuild();
         getArgs(getParameters(msg.getContent()));
 
@@ -146,7 +148,7 @@ public class Command {
         return msg;
     }
 
-    public MessageChannel getChannel() {
+    public TextChannel getChannel() {
         return channel;
     }
 

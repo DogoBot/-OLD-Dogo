@@ -6,7 +6,11 @@ import cf.nathanpb.Dogo.CommandHandler.annotations.Default;
 import cf.nathanpb.Dogo.CommandHandler.enums.Permission;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageHistory;
+import net.dv8tion.jda.core.entities.TextChannel;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -29,11 +33,13 @@ public class Cleaner {
                 cmd.getChannel().sendMessage("Your arg is greater than 100 :/").queue();
                 return;
             }
+            List<Message> msgs = new ArrayList<>();
             MessageHistory h = cmd.getChannel().getHistory();
             for(Message m :  h.retrievePast(i).complete()){
-                m.delete().complete();
+                msgs.add(m);
             }
-            cmd.getChannel().sendMessage(i+" messages deleted!").queue();
+            cmd.getChannel().deleteMessages(msgs).complete();
+            cmd.getChannel().sendMessage(msgs.size()+" messages deleted!").queue();
             return;
         }
         cmd.getChannel().sendMessage("Wrong Args! Use ``help`` command to get info").queue();
