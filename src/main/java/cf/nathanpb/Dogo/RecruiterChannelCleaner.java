@@ -30,7 +30,7 @@ public class RecruiterChannelCleaner implements EventListener {
                                         deleted++;
                                     }
                                 }
-                                channel.sendMessage(deleted + " mensages was deleted!").queue();
+                                channel.sendMessage(deleted + " messages was deleted!").queue();
                             }
                         }
                     }
