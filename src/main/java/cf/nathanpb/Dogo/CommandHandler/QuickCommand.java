@@ -71,9 +71,11 @@ public class QuickCommand {
         }
     }
     public static void checkQuickCommand(Message msg){
-        String cmdname = msg.getContent().split(" ")[0].replace(Config.COMMAND_PREFIX.get(String.class), "");
-        if (cf.nathanpb.Dogo.Commands.QuickCommand.getAll().containsKey(cmdname)) {
-            new QuickCommand(msg);
+        if (msg.getContent().startsWith(Config.COMMAND_PREFIX.get(String.class))) {
+            String cmdname = msg.getContent().split(" ")[0].replace(Config.COMMAND_PREFIX.get(String.class), "");
+            if (cf.nathanpb.Dogo.Commands.QuickCommand.getAll().containsKey(cmdname)) {
+                new QuickCommand(msg);
+            }
         }
     }
 
