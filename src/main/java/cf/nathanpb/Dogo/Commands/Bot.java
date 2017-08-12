@@ -95,12 +95,10 @@ public class Bot {
     )
     public static void Rebuild(Command cmd){
         String s = SystemUtils.shellCommand("./autobuild.sh");
-        if(s.length() > 1900){
-            s = HastebinUtils.getUrl(HastebinUtils.upload(s), false);
+        if(s.contains("BUILD SUCCESSFUL")) {
+            cmd.reply(":white_check_mark: Updated Successfully!");
         }else{
-            s = "```"+s+"```";
+            cmd.reply("**FAILED TO UPDATE**");
         }
-        cmd.reply(s);
-        cmd.reply("Updated!");
     }
 }
