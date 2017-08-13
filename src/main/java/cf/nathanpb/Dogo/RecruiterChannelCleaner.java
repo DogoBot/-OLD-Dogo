@@ -22,19 +22,22 @@ public class RecruiterChannelCleaner implements EventListener {
                             MessageChannel channel = Core.jda.getTextChannelById(Config.LISTING_CHANNEL_ID.get());
                             List<Message> msgs = channel.getHistory().retrievePast(Integer.valueOf(Config.LISTING_CHANNEL_MESSAGE_LIMIT.get(Integer.class))).complete();
                             if (msgs.size() >= Config.LISTING_CHANNEL_MESSAGE_LIMIT.get(Integer.class)) {
-                                int deleted = 0;
-                                channel.sendMessage("Starting auto-cleaning process...").queue();
-                                for (Message m : msgs) {
-                                    if (m.getEmbeds().size() == 0 || !m.getEmbeds().get(0).getTitle().equals(null) ||!m.getEmbeds().get(0).getTitle().contains("profile")) {
-                                        m.delete().complete();
-                                        deleted++;
-                                    }
-                                }
-                                channel.sendMessage(deleted + " messages was deleted!").queue();
+                                clean(channel, msgs);
                             }
                         }
                     }
                 }
         );
+    }
+    public static void clean(MessageChannel channel, List<Message> msgs){
+        int deleted = 0;
+        channel.sendMessage("Starting auto-cleaning process...").queue();
+        for (Message m : msgs) {
+            if (m.getEmbeds().size() == 0 || m.getEmbeds().get(0).getTitle().equals(null)) {
+                m.delete().complete();
+                deleted++;
+            }
+        }
+        channel.sendMessage(deleted + " messages was deleted!").queue();
     }
 }
