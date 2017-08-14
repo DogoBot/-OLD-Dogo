@@ -3,6 +3,7 @@ package cf.nathanpb.Dogo;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -48,5 +49,28 @@ public class JsonMessage {
             message = channel.sendMessage(embed.build()).complete();
         }
         return this;
+    }
+    public static JSONObject from(Message msg){
+        JSONObject object = new JSONObject();
+        if(msg instanceof MessageEmbed){
+            MessageEmbed embed = (MessageEmbed)msg;
+            JSONObject embedObject = new JSONObject();
+            if(!embed.getColor().equals(null)) embedObject.put("color", embed.getColor().toString());
+            if(!embed.getDescription().equals(null)) embedObject.put("description", embed.getDescription());
+            if(!embed.getImage().equals(null)) embedObject.put("image", embed.getImage());
+            if(!embed.getThumbnail().equals(null)) embedObject.put("thumbnail", embed.getThumbnail());
+            if(!embed.getFooter().equals(null)) embedObject.put("footer", new JSONArray().put(embed.getFooter().getText()).put(embed.getFooter().getText()));
+            if(!embed.getAuthor().equals(null)) embedObject.put("author", new JSONArray(embed.getAuthor().getName()).put(embed.getAuthor().getUrl()).put(embed.getAuthor().getIconUrl()));
+            if(!embed.getTitle().equals(null)){
+                if(!embed.getUrl().equals(null)) {
+                    embedObject.put("title", new JSONArray().put(embed.getTitle()).put(embed.getUrl()));
+                }
+                embedObject.put("title", embed.getTitle());
+            }
+            object.put("embed", embed);
+        }else{
+            object.put("message", msg.getContent());
+        }
+        return object;
     }
 }
