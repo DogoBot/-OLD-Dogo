@@ -34,7 +34,7 @@ public class Form implements EventListener {
             "6) How active do you intend to be? (You need to be active in order for your rank to stay where it's at.)",
             "7) For how long have you been playing pixelcanvas?",
             "8) Were/are you a part of any other faction?",
-            "9) Are you aware of the Void alliances and non-aggression pacts (if not check the pinned message in all general)?",
+            "9) Are you aware of the Void alliances and non-aggression pacts? If not, check the #faq channel.",
             "10) Do you agree not to attack our allies and NAP's?"};
     private User target;
     private PrivateChannel channel;
