@@ -11,6 +11,7 @@ import cf.nathanpb.Dogo.Utils.ArgsUtils;
 import cf.nathanpb.Dogo.Utils.HastebinUtils;
 import cf.nathanpb.Dogo.Utils.JavaUtils;
 import cf.nathanpb.Dogo.Utils.PHPUtils;
+import com.sun.corba.se.impl.activation.CommandHandler;
 import me.nathanpb.ProjectMetadata.ProjectMetadataObject;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -63,6 +64,7 @@ public class Eval {
         addImport(JsonMessage.class);
         addImport(Logger.class);
         addImport(RecruiterChannelCleaner.class);
+        addImport(Permission.class);
         addImport(Core.class.getPackage());
 
         addImport(JDA.class);
