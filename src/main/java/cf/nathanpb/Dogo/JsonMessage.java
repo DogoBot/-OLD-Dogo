@@ -53,7 +53,7 @@ public class JsonMessage {
     public static JSONObject from(Message msg){
         JSONObject object = new JSONObject();
         if(msg.getEmbeds().size() > 0){
-            MessageEmbed embed = (MessageEmbed)msg;
+            MessageEmbed embed = msg.getEmbeds().get(0);
             JSONObject embedObject = new JSONObject();
             if(!embed.getColor().equals(null)) embedObject.put("color", embed.getColor().toString());
             if(!embed.getDescription().equals(null)) embedObject.put("description", embed.getDescription());
