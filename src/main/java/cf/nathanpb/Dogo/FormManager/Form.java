@@ -127,7 +127,7 @@ public class Form implements EventListener {
         Role r1 = Core.jda.getRoleById(Config.APPRENTICE_ROLE_ID.get());
         Role r2 = Core.jda.getRoleById(Config.NEWCOMER_ROLE_ID.get());
         Member member = m.getGuild().getMember(DiscordUtils.getUserByURL(embed.getAuthor().getUrl()));
-        if(member == null){
+        if(!m.getGuild().getMembers().contains(member)){
             m.editMessage("Member "+DiscordUtils.getUserByURL(embed.getAuthor().getUrl()).getAsMention()+" left the guild, isn't possible to apply any order!").queue();
             return;
         }
