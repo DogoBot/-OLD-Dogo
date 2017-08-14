@@ -52,7 +52,7 @@ public class JsonMessage {
     }
     public static JSONObject from(Message msg){
         JSONObject object = new JSONObject();
-        if(msg instanceof MessageEmbed){
+        if(msg.getEmbeds().size() > 0){
             MessageEmbed embed = (MessageEmbed)msg;
             JSONObject embedObject = new JSONObject();
             if(!embed.getColor().equals(null)) embedObject.put("color", embed.getColor().toString());
