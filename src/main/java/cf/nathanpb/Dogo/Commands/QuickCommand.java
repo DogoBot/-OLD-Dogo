@@ -80,7 +80,7 @@ public class QuickCommand extends ListenerAdapter{
             return;
         }
         if (getAll().containsKey(cmd.getArg(1))) {
-            cmd.getChannel().sendMessage("This name isnt available!").queue();
+            cmd.getChannel().sendMessage("This name isn't available!").queue();
             return;
         } else {
             JSONObject object = new JSONObject();
@@ -98,6 +98,8 @@ public class QuickCommand extends ListenerAdapter{
                 }
             }
             if(test(object, cmd.getChannel(), cmd.getSender(), cmd.getMessage().getContent())){
+                object.put("source", HastebinUtils.download(object.getString("src")));
+                object.remove("src");
                 profile.put(object.getString("name"), object);
                 cmd.getChannel().sendMessage("QuickCommand created successfully!").queue();
             }else{
@@ -165,7 +167,7 @@ public class QuickCommand extends ListenerAdapter{
         Object s = "";
         boolean error = false;
         try {
-            String code = HastebinUtils.download(HastebinUtils.getID(o.getString("src")));
+            String code = o.getString("source");
             Object[] args = new Object[]{o, channel.getId(), u.getId(), raw, PHPUtils.header};
              s = PHPUtils.eval(code, args);
         }catch (Exception e){
