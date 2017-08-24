@@ -98,7 +98,7 @@ public class QuickCommand extends ListenerAdapter{
                 }
             }
             if(test(object, cmd.getChannel(), cmd.getSender(), cmd.getMessage().getContent())){
-                object.put("source", HastebinUtils.download(object.getString("src")));
+                object.put("source", s);
                 object.remove("src");
                 profile.put(object.getString("name"), object);
                 cmd.getChannel().sendMessage("QuickCommand created successfully!").queue();
