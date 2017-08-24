@@ -159,6 +159,28 @@ public class QuickCommand extends ListenerAdapter{
         }
     }
 
+    @Arg(   arg = "src",
+            usage = "quickcommand src QQ_NAME",
+            description = "Shows QQ's source code",
+            argsLenght = 2,
+            allow = Permission.DEVELOPER)
+    public static void source(Command cmd){
+        if(getAll().containsKey(cmd.getArg(1))){
+            if(!cmd.isOwner()) {
+                if (!Permission.ADMIN.has(cmd.getSender())) {
+                    if (!getAll().get(cmd.getArg(1)).getString("owner").equals(cmd.getSender().getId())) {
+                        cmd.getChannel().sendMessage("This QuickCommand doesn't belongs you!").queue();
+                        cmd.allow = false;
+                        return;
+                    }
+                }
+            }
+            cmd.getChannel().sendMessage("```"+profile.get(cmd.getArg(1), JSONObject.class).getString("source")+"```").queue();
+        }else{
+            cmd.getChannel().sendMessage("This QuickCommand doesn't exists!").queue();
+        }
+    }
+
     public static boolean test(JSONObject o, MessageChannel channel,User user ,String raw){
         return !exec(o, channel, user, raw).startsWith("Error: ");
     }
@@ -185,4 +207,5 @@ public class QuickCommand extends ListenerAdapter{
         }
         return s.toString();
     }
+
 }
