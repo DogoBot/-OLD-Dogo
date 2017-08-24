@@ -52,6 +52,7 @@ public class PHPUtils {
             File file = new File(new File(Config.APACHE_HOME.get(String.class)), fname);
             file.createNewFile();
             FileUtils.copyData(new ByteArrayInputStream(code.getBytes(Charset.defaultCharset())), new FileOutputStream(file));
+            System.out.println(code);
             Object o = WebUtils.download(new URL(Config.WEBSITE_URL.get(String.class)+fname));
             file.delete();
             return o;
