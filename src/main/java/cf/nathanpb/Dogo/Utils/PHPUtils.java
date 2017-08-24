@@ -30,7 +30,6 @@ public class PHPUtils {
             "              \"User-Agent: Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.102011-10-16 20:23:10\\r\\n\"\n" +
             "  )\n" +
             ")";
-    String s2 = "{\"embed\":{\\\"image\\\":\"http://i.prntscr.com/kwf5jaxTw6yh3upZq2iTw.png/%22,/%22title/%22:/%22OPPPPPS, anything exploded!\",\"text\":\"Tell Nathan that his shit that he call 'translator' isn't working, but if you type random things, i'll give you a paulada!nError: [1024]Value must be 1 or below\"}";
     public static Object eval(String code, Object[] args) throws Exception{
             String arg = "";
             for(Object s2 : args){
@@ -46,7 +45,11 @@ public class PHPUtils {
             }
             code.replace("<?php", "").replace("?>", "");
             code = "$args = Array("+ arg+");\n"+code;
-            code = "<?php \n" + code;
+            code = "<?php \n function errorHandler($errno, $errstr){\n" +
+                    "\techo '[$errno]$errstr';\n" +
+                    "\texit();\n" +
+                    "}\n" +
+                    "set_error_handler('errorHandler');\n"+ code;
             code += "\n ?>";
             String fname = new Random().nextInt(100) + ".php";
             File file = new File(new File(Config.APACHE_HOME.get(String.class)), fname);
