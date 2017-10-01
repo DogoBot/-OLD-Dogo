@@ -11,12 +11,12 @@ public enum Parameters {
     ),
     JAVA(
             "j",
-            new Permission[]{Permission.MOD},
+            new Permission[]{Permission.DEVELOPER},
             new Permission[]{}
     ),
     PHP(
             "php",
-            new Permission[]{Permission.MOD},
+            new Permission[]{Permission.DEVELOPER},
             new Permission[]{}
     ),
     DELETE(

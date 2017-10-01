@@ -23,7 +23,7 @@ public class EXP extends ListenerAdapter{
             return;
         }
         if(event.getGuild().getId().equals("140137593412124672") && event.getAuthor().getId().equals("140137402592133120")){
-            if(event.getMessage().getContent().contains("terminar")) event.getChannel().sendMessage("terminar a rainha").queue();
+            if(event.getMessage().getContent().contains("terminar")) event.getChannel().sendMessage("@kakeenho vai terminar a rainha").queue();
         }
         if(!event.getGuild().getId().equals(Config.GUILD_ID.get(String.class))
                 || event.getAuthor().isBot()

@@ -6,6 +6,7 @@ import cf.nathanpb.Dogo.FormManager.FormManager;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.entities.Game;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
@@ -23,6 +24,7 @@ public class Core extends ListenerAdapter{
         jda.addEventListener(new FormManager());
         jda.addEventListener(new QuickCommand());
         jda.addEventListener(new RecruiterChannelCleaner());
+        jda.getPresence().setGame(Game.of("over rewriting"));
     }
     @Override
     public void onMessageReceived(MessageReceivedEvent e) {

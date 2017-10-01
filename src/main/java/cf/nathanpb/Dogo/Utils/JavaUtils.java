@@ -3,11 +3,13 @@ package cf.nathanpb.Dogo.Utils;
 import cf.nathanpb.Dogo.CommandHandler.Command;
 import cf.nathanpb.Dogo.Config;
 import cf.nathanpb.Dogo.Exceptions.EvalException;
+import me.nathanpb.ProjectMetadata.ProjectMetadataObject;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -83,5 +85,20 @@ public class JavaUtils {
         DummyClassLoader(ClassLoader parent) {
             super(parent);
         }
+    }
+    public static void addForbidden(String s){
+        ProjectMetadataObject forbidden = new ProjectMetadataObject("forbidden_java");
+        ArrayList<String> forb = getForbideen();
+        if(!forb.contains(s)){
+            forb.add(s);
+            forbidden.put("methods", forb);
+        }
+    }
+    public static ArrayList<String>getForbideen(){
+        ProjectMetadataObject forbidden = new ProjectMetadataObject("forbidden_java");
+        if(forbidden.hasKey("methods")){
+            return forbidden.getAsList("methods", String.class);
+        }
+        return new ArrayList<>();
     }
 }

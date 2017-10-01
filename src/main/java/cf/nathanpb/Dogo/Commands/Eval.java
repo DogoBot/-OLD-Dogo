@@ -55,7 +55,7 @@ import java.util.concurrent.TimeUnit;
         argslengh = 1
 )
 public class Eval {
-    private static String imports = "package eval;\nimport cf.nathanpb.Dogo.*;\n";
+    public static String imports = "package eval;\nimport cf.nathanpb.Dogo.*;\n";
 
     static {
         addImport(Config.class);

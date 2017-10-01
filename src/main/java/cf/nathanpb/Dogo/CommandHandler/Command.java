@@ -108,7 +108,7 @@ public class Command {
                 }
             }
         }
-        cf.nathanpb.Dogo.CommandHandler.QuickCommand.checkQuickCommand(msg);
+        //cf.nathanpb.Dogo.CommandHandler.QuickCommand.checkQuickCommand(msg);
     }
 
     public void reply(JSONObject o) {

@@ -4,16 +4,17 @@ import cf.nathanpb.Dogo.CommandHandler.enums.Parameters;
 import cf.nathanpb.Dogo.Config;
 import cf.nathanpb.Dogo.Core;
 import cf.nathanpb.Dogo.Events.QQExecutedEvent;
+import cf.nathanpb.Dogo.Exceptions.EvalException;
 import cf.nathanpb.Dogo.JsonMessage;
 import cf.nathanpb.Dogo.Logger;
 import cf.nathanpb.Dogo.Utils.DiscordUtils;
 import cf.nathanpb.Dogo.Utils.HastebinUtils;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
+import cf.nathanpb.Dogo.Utils.JavaUtils;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.*;
 import org.json.JSONObject;
 
+import java.awt.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -48,11 +49,21 @@ public class QuickCommand {
             }
             this.object = cf.nathanpb.Dogo.Commands.QuickCommand.getAll().get(qqName);
             Executors.newSingleThreadExecutor().submit(() -> {
-                String s = cf.nathanpb.Dogo.Commands.QuickCommand.exec(this.object, msg.getChannel(), msg.getAuthor(), raw);
                 try {
-                    new JsonMessage(new JSONObject(s)).send(msg.getChannel());
-                } catch (Exception e) {
-                    msg.getChannel().sendMessage(s).queue();
+                    cf.nathanpb.Dogo.Commands.QuickCommand.exec(this.object, this);
+                }catch (EvalException e) {
+                    EmbedBuilder s = new EmbedBuilder();
+                    s.setColor(Color.RED);
+                    s.setTitle(e.getMessage());
+                    String s2 = e.getError();
+                    s2.replace(cf.nathanpb.Dogo.Config.TOKEN.get(), "<BOT_TOKEN>");
+                    if (s2.length() > 500) {
+                        s2 = HastebinUtils.getUrl(HastebinUtils.upload(s2), false);
+                    } else {
+                        s2 = "```" + s2 + "```";
+                    }
+                    s.setDescription(s2);
+                    reply(s.build());
                 }
             });
             if (this.parameters.contains(Parameters.DELETE)) {
@@ -105,5 +116,21 @@ public class QuickCommand {
 
     public String getRaw() {
         return raw;
+    }
+
+    public void reply(JSONObject o) {
+        reply(o.toString());
+    }
+
+    public void reply(String s) {
+        try {
+            new JsonMessage(s).send(channel);
+        } catch (Exception e) {
+            channel.sendMessage(s).complete();
+        }
+    }
+
+    public void reply(MessageEmbed embed) {
+        channel.sendMessage(embed).queue();
     }
 }

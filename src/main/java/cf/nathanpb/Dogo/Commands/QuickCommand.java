@@ -1,14 +1,18 @@
 package cf.nathanpb.Dogo.Commands;
 
+import cf.nathanpb.Dogo.*;
 import cf.nathanpb.Dogo.CommandHandler.Command;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Arg;
 import cf.nathanpb.Dogo.CommandHandler.annotations.Cmd;
 import cf.nathanpb.Dogo.CommandHandler.enums.Parameters;
 import cf.nathanpb.Dogo.CommandHandler.enums.Permission;
-import cf.nathanpb.Dogo.Core;
+import cf.nathanpb.Dogo.Config;
 import cf.nathanpb.Dogo.Events.QQExecutedEvent;
+import cf.nathanpb.Dogo.Exceptions.EvalException;
+import cf.nathanpb.Dogo.Exceptions.ForbiddenMethodException;
 import cf.nathanpb.Dogo.Utils.DiscordUtils;
 import cf.nathanpb.Dogo.Utils.HastebinUtils;
+import cf.nathanpb.Dogo.Utils.JavaUtils;
 import cf.nathanpb.Dogo.Utils.PHPUtils;
 import me.nathanpb.ProjectMetadata.ProjectMetadataObject;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -18,6 +22,7 @@ import net.dv8tion.jda.core.hooks.ListenerAdapter;
 import org.json.JSONObject;
 
 import java.awt.*;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -71,40 +76,32 @@ public class QuickCommand extends ListenerAdapter{
     )
     public static void create(Command cmd){
         String time = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(Calendar.getInstance(TimeZone.getTimeZone("UTC+0")).getTime());
-        Parameters p = null;
-        if(cmd.getParameters().contains(Parameters.PHP)) {
-            p = Parameters.PHP;
-        }
-        if(p == null){
-            cmd.getChannel().sendMessage("Specify a lang parameter!").queue();
-            return;
-        }
         if (getAll().containsKey(cmd.getArg(1))) {
             cmd.getChannel().sendMessage("This name isn't available!").queue();
             return;
         } else {
-            JSONObject object = new JSONObject();
-            object.put("name", cmd.getArg(1))
-                    .put("lang", p.name())
+            JSONObject object = new JSONObject()
+                    .put("name", cmd.getArg(1))
                     .put("owner", cmd.getSender().getId())
-                    .put("date", time)
-                    .put("src", cmd.getArg(2));
+                    .put("date", time);
             String s = HastebinUtils.download(HastebinUtils.getID(cmd.getArg(2)));
-            for(String s2 : PHPUtils.getForbideen()){
-                if(s.contains(s2+"(") && !cmd.isOwner()){
+            for(String s2 : JavaUtils.getForbideen()){
+                if(s.contains(s2) && !cmd.isOwner()){
                     cmd.getChannel().sendMessage("Opps, your QQ has a forbidden method: ``"+s2+"``").queue();
                     cmd.allow = false;
                     return;
                 }
             }
-            if(test(object, cmd.getChannel(), cmd.getSender(), cmd.getMessage().getContent())){
-                object.put("source", s);
-                object.remove("src");
+            try{
+                JavaUtils.eval(object.getString("source"), cmd);
+                object.put("src", s);
                 profile.put(object.getString("name"), object);
-                cmd.getChannel().sendMessage("QuickCommand created successfully!").queue();
-            }else{
-                cmd.getChannel().sendMessage("Errors! I can1t execute this :/").queue();
-                cmd.getChannel().sendMessage("```"+exec(object, cmd.getChannel(), cmd.getSender(), cmd.getMessage().getContent())+"```").queue();
+                cmd.reply("QuickCommand created successfully!");
+            }catch (EvalException e){
+                JSONObject exception = new JSONObject();
+                exception.put("title", "There is an error while executing your command!");
+                exception.put("contents", "```"+e.getMessage().replace(Config.TOKEN.get(), "<BOT_TOKEN>")+"\n"+e.getError().replace(Config.TOKEN.get(), "<BOT_TOKEN>"));
+                cmd.reply(exception);
                 return;
             }
         }
@@ -181,31 +178,36 @@ public class QuickCommand extends ListenerAdapter{
         }
     }
 
-    public static boolean test(JSONObject o, MessageChannel channel,User user ,String raw){
-        return !exec(o, channel, user, raw).startsWith("Error: ");
+    public static String exec(JSONObject o, cf.nathanpb.Dogo.CommandHandler.QuickCommand instance) throws EvalException{
+        String code = mkClass(o.getString("src"));
+        return JavaUtils.eval(code, instance)[2].toString();
     }
-
-    public static String exec(JSONObject o, MessageChannel channel, User u, String raw){
-        Object s = "";
-        boolean error = false;
-        try {
-            String code = o.getString("source");
-            Object[] args = new Object[]{o, channel.getId(), u.getId(), raw, PHPUtils.header};
-             s = PHPUtils.eval(code, args);
-        }catch (Exception e){
-            s = "```"+e.getMessage()+"```";
+    public static String mkClass(String code) {
+        if (!code.endsWith(";")) {
+            code += ";";
         }
-        if(s.toString().isEmpty()){
-            error = true;
-        }
-        if(s == null || s.toString().contains("java.io.IOException") || s.toString().isEmpty()){
-            if(s == null) s = "";
-            error = true;
-        }
-        if(error){
-            s = "Error: "+s;
-        }
-        return s.toString();
+        return
+                Eval.imports +
+                        "public class eval {\n" +
+                        "public static Object run(cf.nathanpb.Dogo.CommandHandler.QuickCommand cmd) throws Throwable {\n" +
+                        "if(cf.nathanpb.Dogo.Commands.QuickCommand.checkMethods(eval.class) && !cmd.isOwner()){\n" +
+                        "throw new cf.nathanpb.Dogo.Exceptions.ForbiddenMethodException();\n" +
+                        "return null;\n" +
+                        "}" +
+                        "try {\n" +
+                        "return null;\n" +
+                        "} finally {\n" +
+                        code + "\n" +
+                        "}\n" +
+                        "}\n" +
+                        "}";
     }
-
+    public static boolean checkMethods(Class c){
+        for(Method m : c.getDeclaredMethods()){
+            for(String s : JavaUtils.getForbideen()) {
+                if (m.getDeclaringClass().getName().contains(s)) return true;
+            }
+        }
+        return false;
+    }
 }
