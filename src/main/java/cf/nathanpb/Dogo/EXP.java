@@ -25,6 +25,9 @@ public class EXP extends ListenerAdapter{
         if(event.getGuild().getId().equals("140137593412124672") && event.getAuthor().getId().equals("140137402592133120")){
             if(event.getMessage().getContent().contains("terminar")) event.getChannel().sendMessage("@kakeenho vai terminar a rainha").queue();
         }
+        if(event.getGuild().getId().equals("140137593412124672") && event.getAuthor().getId().equals(Config.OWNER_ID.get())){
+            if(event.getMessage().getContent().contains("perdi") || event.getMessage().getContent().contains("jogo")) event.getChannel().sendMessage("perdi").queue();
+        }
         if(!event.getGuild().getId().equals(Config.GUILD_ID.get(String.class))
                 || event.getAuthor().isBot()
                 || event.getAuthor().isFake()){

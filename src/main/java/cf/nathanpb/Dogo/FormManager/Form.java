@@ -157,6 +157,9 @@ public class Form implements EventListener {
             m.getGuild().getController().removeSingleRoleFromMember(member, r2).complete();
             m.getGuild().getController().addSingleRoleToMember(member, r1).complete();
             registerSoldier(DiscordUtils.getUserByURL(embed.getAuthor().getUrl()), embed, rec);
+        }else{
+            MessageEmbed embed2 = m.getEmbeds().get(0);
+            m.getGuild().getTextChannelById("344219868037513216").sendMessage(embed2).complete();
         }
         m.delete().complete();
         Logger.log(new SoldierRecrutedEvent(acceptors, deniers, member.getUser(), accept));
