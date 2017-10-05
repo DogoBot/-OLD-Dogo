@@ -34,9 +34,11 @@ public class Review {
                 embed.setAuthor(u.getName(), DiscordUtils.getAvatarURL(u), DiscordUtils.getAvatarURL(u));
                 embed.setTitle(u.getName()+" info:", "");
                 embed.setFooter("Requested by " + cmd.getSender().getName(), DiscordUtils.getAvatarURL(cmd.getSender()));
-                embed.setDescription(
-                        "**Accepted by: **"+ Core.jda.getUserById(new ProjectMetadataObject(u.getId()).get("recruiter", String.class)).getAsMention()+"\n\n"
-                                +new ProjectMetadataObject(u.getId()).get("listing_info", String.class));
+                String description = new ProjectMetadataObject(u.getId()).get("listing_info", String.class);
+                try {
+                    description =  "**Accepted by: **"+ Core.jda.getUserById(new ProjectMetadataObject(u.getId()).get("recruiter", String.class)).getAsMention()+"\n\n"+description;
+                }catch (Exception e){};
+                embed.setDescription(description);
                 cmd.getChannel().sendMessage(embed.build()).queue();
             } else {
                 cmd.getChannel().sendMessage(u.getAsMention() + " isn't a registered Voidling").queue();
