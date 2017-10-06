@@ -123,6 +123,8 @@ public class Eval {
         addImport(JSONArray.class);
 
         addImport(Proxy.class);
+        addImport(Timer.class);
+        addImport(TimerTask.class);
     }
 
     public static Set<Class<?>> getAllClasses(Package p) {
