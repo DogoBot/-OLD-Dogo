@@ -26,7 +26,7 @@ public class HastebinUtils {
     public static synchronized String download(String ID) {
         String URLString = "https://hastebin.com/raw/" + ID + "/";
         try {
-            return WebUtils.download(URLString).toString();
+            return WebUtils.download(URLString, null).toString();
         }catch (Exception e){
             return e.getMessage();
         }

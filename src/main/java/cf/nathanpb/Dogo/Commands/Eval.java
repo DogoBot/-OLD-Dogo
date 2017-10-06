@@ -35,6 +35,7 @@ import org.reflections.util.FilterBuilder;
 import java.awt.*;
 import java.io.*;
 import java.lang.management.ManagementFactory;
+import java.net.Proxy;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLConnection;
@@ -120,6 +121,8 @@ public class Eval {
 
         addImport(JSONObject.class);
         addImport(JSONArray.class);
+
+        addImport(Proxy.class);
     }
 
     public static Set<Class<?>> getAllClasses(Package p) {
